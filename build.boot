@@ -3,6 +3,7 @@
                     [adzerk/boot-cljs-repl      "0.3.3"]
                     [adzerk/boot-reload         "0.5.1"]
                     [compojure                  "1.6.0-beta3"]
+                    [deraen/boot-sass           "0.3.1"]
                     [hoplon/castra              "3.0.0-alpha7"]
                     [hoplon/hoplon              "6.0.0-alpha17"]
                     [org.clojure/clojure        "1.9.0"]
@@ -13,12 +14,13 @@
                     [com.cemerick/piggieback    "0.2.1"  :scope "test"]
                     [weasel                     "0.7.0"  :scope "test"]
                     [org.clojure/tools.nrepl    "0.2.12" :scope "test"]]
-  :resource-paths #{"resources" "src/clj"}
+  :resource-paths #{"node_modules" "resources" "src/clj"}
   :source-paths   #{"src/cljs" "src/hl"})
 
 (require
   '[adzerk.boot-cljs   :refer [cljs]]
   '[adzerk.boot-reload :refer [reload]]
+  '[deraen.boot-sass   :refer [sass]]
   '[hoplon.boot-hoplon :refer [hoplon prerender]]
   '[pandeiro.boot-http :refer [serve]])
 
@@ -32,6 +34,7 @@
       :reload  true)
     (watch)
     (speak)
+    (sass)
     (hoplon)
     (reload)
     (cljs :optimizations :none :source-map true)))
@@ -40,6 +43,7 @@
   "Build clojureduty for production deployment."
   []
   (comp
+    (sass)
     (hoplon)
     (cljs :optimizations :advanced)
     (prerender)))
@@ -47,7 +51,8 @@
 (deftask make-war
   "Build a war for deployment"
   []
-  (comp (hoplon)
+  (comp (sass)
+        (hoplon)
         (cljs :optimizations :advanced)
         (uber :as-jars true)
         (web :serve 'clojureduty.handler/app)

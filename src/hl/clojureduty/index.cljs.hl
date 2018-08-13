@@ -1,13 +1,25 @@
 (page "index.html"
   (:require
-    [clojureduty.rpc :as rpc]))
+    [clojureduty.rpc :as rpc]
+    [material.card   :as card]))
 
 (rpc/init)
 
 (html
   (head
+    (link :href "https://fonts.googleapis.com/icon?family=Material+Icons" :rel "stylesheet")
     (link :href "app.css" :rel "stylesheet"))
   (body
+    (card/card
+      (card/media
+        (h1 "Title"))
+      (card/actions
+        (card/action-buttons
+          (card/action-button "Action 1")
+          (card/action-button "Action 2"))
+        (card/action-icons
+          (card/action-icon :title "Share" "share")
+          (card/action-icon :title "More Options" "more_vert"))))
     (h1 (text "Hello, Hoplon and Castra!"))
     (pre (text "session = ~{rpc/session-number}, random = ~{rpc/random-number}"))))
 

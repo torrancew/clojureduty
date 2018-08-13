@@ -3,3 +3,5 @@
 hs_err*
 out/
 target/
+node_modules/*
+!.gitkeep
