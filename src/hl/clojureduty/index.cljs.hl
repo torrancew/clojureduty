@@ -1,26 +1,28 @@
 (page "index.html"
   (:require
     [clojureduty.rpc :as rpc]
-    [material.card   :as card]))
+    [material.cards  :as cards]
+    [material.fab    :as fab]
+    [material.icons  :as icons]))
 
 (rpc/init)
 
 (html
   (head
-    (link :href "https://fonts.googleapis.com/icon?family=Material+Icons" :rel "stylesheet")
+    (icons/include)
     (link :href "app.css" :rel "stylesheet"))
   (body
-    (card/card
-      (card/media
+    (cards/card
+      (cards/media
         (h1 "Title"))
-      (card/actions
-        (card/action-buttons
-          (card/action-button "Action 1")
-          (card/action-button "Action 2"))
-        (card/action-icons
-          (card/action-icon :title "Share" "share")
-          (card/action-icon :title "More Options" "more_vert"))))
-    (h1 (text "Hello, Hoplon and Castra!"))
+      (cards/actions
+        (cards/action-buttons
+          (cards/action-button "Action 1")
+          (cards/action-button "Action 2"))
+        (cards/action-icons
+          (cards/action-icon :title "Share" "share")
+          (cards/action-icon :title "More Options" "more_vert"))))
+    (fab/fab "favorite")
     (pre (text "session = ~{rpc/session-number}, random = ~{rpc/random-number}"))))
 
 ; vim: set ft=clojure:
